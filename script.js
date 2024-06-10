@@ -13,7 +13,7 @@
     inModelo.focus();
 
     frm.btListar.dispatchEvent(new Event("click"));
- })
+ });
 
  frm.btListar.addEventListener("click", () =>{
     if(carros.length === 0){
@@ -24,7 +24,7 @@
     const lista = carros.reduce((acumulador, carro) =>
         acumulador + carro.modelo + "- R$: " + carro.preco.toFixed(2) + "\n", "");
     resp.innerText = `Lista dos Carros Cadastrados\n${"-".repeat(40)}\n${lista}`
- })
+ });
 
  frm.btFiltrar.addEventListener("click", () =>{
     const maximo = Number(prompt("Qual o valor máximo que o cliente deseja pagar?"));
@@ -47,6 +47,25 @@
         lista += `${carro.modelo} - R$: ${carro.preco.toFixed(2)}\n`;
     }
 
-    resp.innerText = `Carros até R$: ${maximo.toFixed(2)}\n${"-".repeat(40)}\n${lista}`
- })
+    resp.innerText = `Carros até R$: ${maximo.toFixed(2)}\n${"-".repeat(40)}\n${lista}`;
+ });
  
+ frm.btSimular.addEventListener("click", () =>{
+    const desconto = Number(prompt("Qual o percentual de desconto: "));
+    if(desconto == 0 ||isNaN(desconto)){
+        alert("Digite um valor maior que zero");
+        return;
+    }
+
+    const carroDesc = carros.map(aux =>({
+        modelo: aux.modelo,
+        preco: aux.preco
+    }));
+
+    let lista = "";
+    for (const carro of carroDesc){
+        lista += `${carro.modelo} - R$: ${carro.preco.toFixed(2)}\n`;
+    }
+
+    resp.innerText = `Carros com desconto: ${desconto}%\n${"-".repeat(40)}\n${lista}`;
+ });
